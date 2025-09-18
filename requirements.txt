@@ -1,0 +1,11 @@
+ipykernel
+pypdf
+langchain-community
+langchain
+langchain-core
+langchain-text-splitters
+rank_bm25 
+chromadb
+langchain-huggingface
+langchain-chroma>=0.1.2
+HuggingFaceHub
