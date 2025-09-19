@@ -14,7 +14,7 @@ This project is a **PDF Query Chatbot** that allows users to load PDF files, spl
 ---
 
 ## 📂 Project Structure
-- `agentic.ipynb` → Jupyter notebook to run the chatbot.
+- `chatbot.ipynb` → Jupyter notebook to run the chatbot.
 - `requirements.txt` → Project dependencies.
 
 ---
@@ -23,18 +23,18 @@ This project is a **PDF Query Chatbot** that allows users to load PDF files, spl
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/your-username/PDF-Query-Chatbot.git
-cd PDF-Query-Chatbot
+git clone https://github.com/AnandhuSaji007/PDF_Query_Chatbot
+cd PDF-Query-Chatbo
 ```
 
 ### 2️⃣ Create a Virtual Environment
 ```bash
-python -m venv agent
+conda create -p venv python=3.12 -y
 ```
 
 Activate it:
-- **Windows**: `agent\Scripts\activate`
-- **Linux/Mac**: `source agent/bin/activate`
+- **Windows**: `conda activate venv/`
+
 
 ### 3️⃣ Install Dependencies
 ```bash
@@ -44,73 +44,8 @@ pip install -r requirements.txt
 ### 4️⃣ Run the Agent
 Open Jupyter Notebook and run:
 ```bash
-jupyter notebook agentic.ipynb
+chatbot.ipynb
 ```
-
----
-
-## 🛠️ Code Overview
-
-### 1. Load PDF
-```python
-loader = PyPDFLoader(file_path)
-pages = []
-async for page in loader.alazy_load():
-    pages.append(page)
-```
-
-### 2. Split Text
-```python
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=100, chunk_overlap=20)
-texts = text_splitter.create_documents(raw_texts)
-```
-
-### 3. Embeddings + Vector Store
-```python
-embeddings_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
-db = Chroma.from_documents(texts, embeddings_model)
-retriever = db.as_retriever()
-```
-
-### 4. LLM Integration
-```python
-llm_endpoint = HuggingFaceEndpoint(
-    repo_id="HuggingFaceH4/zephyr-7b-beta",
-    huggingfacehub_api_token=HF_TOKEN,
-    task="text-generation",
-    temperature=0.3,
-    max_new_tokens=1024
-)
-llm = ChatHuggingFace(llm=llm_endpoint)
-```
-
-### 5. Define Chain & Query
-```python
-chain = (
-    {"context": retriever, "query": RunnablePassthrough()}
-    | prompt
-    | llm
-    | output_parser
-)
-print(chain.invoke("list the course outcomes"))
-```
-
----
-
-## 📌 Example Query
-```text
-User: list the course outcomes
-Assistant: (Generates structured response using Zephyr-7B model)
-```
-
----
-
-## ✅ Next Steps
-- Add multi-PDF support.
-- Enhance query accuracy with RAG.
-- Deploy chatbot as a web app (e.g., Streamlit/Gradio).
-
----
 
 ## 📌 Author
-Developed by **Your Name**
+Developed by **Anandhu Saji**
